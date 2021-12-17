@@ -12,12 +12,24 @@
 }
 
 html {
-    font-size: 18px;
+    font-size: 93.75%;
 }
 
 body {
     font-family: 'Lato', sans-serif;
     background-color: var(--lavander);
+}
+
+.screen-readers-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 
 header {
@@ -27,13 +39,17 @@ header {
     text-align: center;
 }
 
+header h1 {
+    margin: 1rem 0 3rem 0;
+}
+
 main {
     width: min(90vw, 800px);
     margin: auto;
 }
 
 .container-boxes {
-    margin-top: -3rem;
+    margin-top: -6.8rem;
 }
 
 .boxes {
@@ -42,15 +58,22 @@ main {
     border-radius: 0.2rem;
 }
 
-.boxes h2 {
+.boxes h3 {
     font-size: 1rem;
     font-weight: normal;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boxes img {
+    background-color: black;
 }
 
 .boxes p {
     font-size: 2rem;
     margin-top: 1.5rem;
-    font-weight: bold;
+    font-weight: bolder;
 }
 
 #box-input {
@@ -65,26 +88,46 @@ main {
 
 #box-total {
     background-color: white;
+    color: var(--dark-slate-gray);
 }
 
-#title-table {
-    padding: 3rem 0 1rem 0;
+#add-transaction {
+    color: var(--lime);
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    display: inline-block;
+    margin: 2rem 0 1rem 0;
+}
+
+#add-transaction:hover {
+    text-decoration: underline dotted;
 }
 
 table {
     width: 100%;
     border-spacing: 0 0.5rem;
+    color: var(--dark-slate-gray);
+    font-weight: bolder;
+}
+
+@media(max-width: 520px) {
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
 }
 
 table th {
     padding: 0 1rem;
     border-radius: 0.2rem;
     text-align: left;
-    color: var(--dark-slate-gray);
+    color: lightslategray;
 }
 
 table td {
-    background-color:  white;
+    background-color: white;
     padding: 1rem 1rem;
 }
 
@@ -96,8 +139,10 @@ table tbody tr td:last-child {
     border-radius: 0 0.2rem 0.2rem 0;
 }
 
-table tr:hover {
-    opacity: 0.8;
+tbody tr:hover {
+    transform: scale(1.02);
+    transition: 250ms linear;
+    color: black;
 }
 
 .input {
@@ -110,6 +155,79 @@ table tr:hover {
     font-weight: bold;
 }
 
+#container-modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+
+#modal {
+    background-color: var(--lavander);
+    padding: 2rem;
+    width: 600px;
+    box-shadow: 0 0 20px 1px black;
+}
+
+form input {
+    margin: 0.3rem 0;
+    border: none;
+    padding: 1rem 0.5rem;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#modal h2 {
+    margin-bottom: 1.5rem;
+}
+
+form p {
+    font-size: 0.9rem;
+    color: var(--dark-slate-gray);
+}
+
+.container-buttons {
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.8rem;
+}
+
+.buttons {
+    padding: 1rem 0;
+    font-size: 1.4rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+}
+
+#button-cancel:hover, #button-add:hover {
+    opacity: 0.5;
+}
+
+#button-cancel {
+    width: 100%;
+    border: 2px solid var(--crimson);
+    color: var(--crimson);
+    background-color: white;
+}
+
+#button-add {
+    width: 100%;
+    border: none;
+    background-color: var(--lime);
+    color: white;
+}
+
 footer {
     text-align: center;
     padding: 4rem 0 1.5rem 0;
@@ -119,4 +237,16 @@ footer {
 
 footer p {
     line-height: 1.6rem;
+}
+
+@media(min-width: 800px) {
+    html {
+        font-size: 87.5%;
+    }
+
+    .container-boxes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
 }
