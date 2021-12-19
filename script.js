@@ -9,43 +9,73 @@ function openAndCloseModal() {
 buttonOpenModal.addEventListener('click', openAndCloseModal);
 buttonCloseModal.addEventListener('click', openAndCloseModal);
 
-//pegar entradas do usuario
-//exibir dados na tela
-// atualixar caixas com as informações de entrada
-//calcular dados pegos
-
 const description = document.querySelector('#description');
 const value = document.querySelector('#value');
 const date = document.querySelector('#date');
+const inputsOfUser = [];
 
-// Converting string to number
-function convertToNumber(string) {
-    return Number(string);
+//Cleaning the number before calculate
+function convertToNumber(num) {
+    return num.replace('-', '');
 }
 
+const numClean = convertToNumber(value.value);
+console.log(numClean);
+
 // Converting string to array to change format date
-function convertDate(date) {
+function formatDate(date) {
     let arrayDate = date.split('-');
     return `${arrayDate[2]}/${arrayDate[1]}/${arrayDate[0]}`;
 }
+const dateFormated = formatDate(date.value);
 
 // Function to create HTML with inputs of user. 
 function displayDatainHTML() {
     let tagTable = document.querySelector('table tbody');
     let tagTr = document.createElement('tr');
 
+    // Creating object with inputs user
+    const object = {
+        description: description.value,
+        value: Number(value.value),
+        date: formatDate(date.value)
+    }
+    //Adding object in array
+    inputsOfUser.push(object);
+
+    //Calculating inputs of user and adding result to HTML
+    function calculate() {
+        let valueTotal = 0;
+        if (Number(value.value) > 0) {
+            inputsOfUser.forEach((object) => {
+            valueTotal = valueTotal += object.value;
+            })
+            return valueTotal;
+        } else if (Number(value.value) < 0) {
+            inputsOfUser.forEach((object) => {
+            valueTotal = valueTotal -= object.value;
+            })
+            return valueTotal;
+        }
+    }
+
+    const boxTotal = document.querySelector('#box-total p');
+
+    //Separating positive values and adding result to HTML
+
     //Mounting HTML structure
     tagTr.innerHTML = `
-    <td>${description.value}</td>
-    <td class="input">R$ ${value.value}</td>
-    <td>${convertDate(date.value)}</td>
-    <td><img src="./images/plus.svg" alt="Imagem icone adição"></td>`;
+        <td>${description.value}</td>
+        <td class="input">R$ ${value.value}</td>
+        <td>${formatDate(date.value)}</td>
+        <td><img src="./images/plus.svg" alt="Imagem icone adição"></td>`;
     tagTable.appendChild(tagTr);
 
     // Clear fields
     description.value = '';
     value.value = '';
     date.value = '';
+
 }
 
 // changing submit button behavior (to no reload page and add HTML)
@@ -57,5 +87,4 @@ buttonAdd.addEventListener('click', (event) => {
 buttonAdd.addEventListener('click', displayDatainHTML);
 buttonAdd.addEventListener('click', openAndCloseModal);
 
-// Proximo passo fazer calculo
-const array = [];
+console.log(inputsOfUser); 

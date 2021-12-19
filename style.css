@@ -46,6 +46,7 @@ header h1 {
 main {
     width: min(90vw, 800px);
     margin: auto;
+    padding-bottom: 5rem;
 }
 
 .container-boxes {
@@ -234,13 +235,27 @@ form p {
 
 footer {
     text-align: center;
-    padding: 4rem 0 1.5rem 0;
+    padding: 1.5rem 0;
     color: var(--dark-slate-gray);
     font-weight: bold;
 }
 
 footer p {
     line-height: 1.6rem;
+    color: var(--dark-slate-gray);
+}
+
+footer img{
+    width: 120px;
+    margin-left: 0.6rem;    
+}
+
+
+footer div {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media(min-width: 800px) {
