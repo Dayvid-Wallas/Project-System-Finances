@@ -168,7 +168,7 @@ tbody tr:hover {
 }
 
 /* Hidden modal */
-.visible {
+.visibility {
     visibility: hidden;
 }
 
