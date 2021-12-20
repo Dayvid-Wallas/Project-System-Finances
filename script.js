@@ -12,20 +12,32 @@ buttonCloseModal.addEventListener('click', openAndCloseModal);
 
 //Changing the default behavior of the submit form button
 const buttonAdd = document.querySelector('form');
-
 buttonAdd.addEventListener('submit', (event) => {
     event.preventDefault();
     try {
         form.validateFields();
-        form.formatValues();
-        form.formatData();        
+        const transaction2 = form.formatValues();
+        transaction.add(transaction2)
+        form.clearFields();
+        openAndCloseModal();        
     } catch (error) {
         alert(error.message);
     }
 })
 
+const storage = {
+    get() {
+        return JSON.parse(localStorage.getItem('dev.finances:transactions')) || [];
+    },
+
+    set(transactions) {
+        localStorage.setItem('dev.finances:transactions', JSON.stringify(transactions))
+    }
+}
+
 const transaction = {
-    all: [
+    all: storage.get(),
+    /*[
         {
             description: 'Desenvolvimento de site',
             value: 500001,
@@ -41,7 +53,7 @@ const transaction = {
             value: 120000,
             date: '19/12/2021'
         }
-    ],
+    ]*/
 
     add(object) {
         transaction.all.push(object);
@@ -83,11 +95,12 @@ const DOM = {
 
     addTransaction(transaction, index) {
         const tagTr = document.createElement('tr');
-        tagTr.innerHTML = DOM.innerHTMLTransaction(transaction);
+        tagTr.innerHTML = DOM.innerHTMLTransaction(transaction, index);
+        tagTr.dataset.index = index;        
         DOM.transactionsContainer.appendChild(tagTr);
     },
 
-    innerHTMLTransaction(transaction) {
+    innerHTMLTransaction(transaction, index) {
         const classCSS = transaction.value > 0 ? 'input' : 'output';
 
         const value = utils.formatCurrency(transaction.value);
@@ -96,7 +109,7 @@ const DOM = {
         <td>${transaction.description}</td>
         <td class="${classCSS}">${value}</td>
         <td>${transaction.date}</td>
-        <td><img src="./images/minus.svg" alt="Imagem icone subtração"></td>
+        <td><img onclick="transaction.remove(${index})" src="./images/minus.svg" alt="Imagem icone subtração"></td>
         `
         return html;
     },
@@ -120,7 +133,8 @@ const DOM = {
 const utils = {
     formatCurrency(value) {
         const signal = Number(value) < 0 ? '-' : '';
-        value = String(value).replace(/\D/g, '');
+        //Removing all characters non number with regEx
+        value = String(value).replace(/\D/g, ''); 
         value = Number(value) / 100;
         value = value.toLocaleString('pt-BR', {
             style: 'currency',
@@ -129,8 +143,10 @@ const utils = {
         return signal + value;
     },
 
-    formatValues(stringNum) {
-        stringNum = Number(stringNum) * 100;
+    formatValues(stringNum) { 
+        //Removing dots and commas with regEx .replace(/\,?\.?/g, '')
+        stringNum = stringNum * 100;
+        stringNum = Math.round(stringNum);
         return stringNum;
     },
 
@@ -165,21 +181,27 @@ const form = {
         let {description, value, date} = form.getValues();
         value = utils.formatValues(value);
         date = utils.formatDate(date);
-        console.log(date)
+        return {
+            description,
+            value,
+            date
+        }
     },
 
-    formatData() {
-        console.log('formatar dados')
+    clearFields() {
+        form.description.value = '';
+        form.value.value = '';
+        form.date.value = '';
     },
 }
 
 const app = {
     init() {
-        transaction.all.forEach((transaction) => {
-            DOM.addTransaction(transaction)
-        });
-        
+        transaction.all.forEach((transaction, index) => {
+            DOM.addTransaction(transaction, index)
+        });        
         DOM.updateBalance();
+        storage.set(transaction.all);
     },
 
     reload() {

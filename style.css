@@ -12,7 +12,7 @@
 }
 
 html {
-    font-size: 93.75%;
+    font-size: 18px;
 }
 
 body {
@@ -44,7 +44,7 @@ header h1 {
 }
 
 main {
-    width: min(90vw, 800px);
+    width: min(90vw, 1000px);
     margin: auto;
     padding-bottom: 5rem;
 }
@@ -54,7 +54,7 @@ main {
 }
 
 .boxes {
-    padding: 1.4rem 1rem;
+    padding: 1rem 1rem;
     margin-bottom: 1.5rem;
     border-radius: 0.2rem;
 }
@@ -67,42 +67,49 @@ main {
     align-items: center;
 }
 
-.boxes img {
-    background-color: black;
-}
-
 .boxes p {
     font-size: 2rem;
     margin-top: 1.5rem;
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 #box-input {
+    background-color: white;
+    color: var(--lime);
+}
+
+#box-output {
+    background-color: white;
+    color: var(--crimson);
+}
+
+#box-total {
     background-color: var(--lime);
     color: white;
 }
 
-#box-output {
-    background-color: var(--crimson);
-    color: white;
-}
-
-#box-total {
-    background-color: white;
-    color: var(--dark-slate-gray);
+.boxes span {
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 #add-transaction {
-    color: var(--lime);
+    color: white;
     text-decoration: none;
     font-weight: bolder;
     font-size: 1.2rem;
     display: inline-block;
     margin: 2rem 0 1rem 0;
+    padding: 0.3rem 0.4rem;
+    border-radius: 0.2rem;
+    border: 2px solid var(--lime);
+    background-color: var(--lime);
+    transition: 200ms linear;
 }
 
 #add-transaction:hover {
-    text-decoration: underline dotted;
+    background-color: white;
+    color: var(--lime);
 }
 
 table {
@@ -129,7 +136,7 @@ table th {
 
 table td {
     background-color: white;
-    padding: 1rem 1rem;
+    padding: 0.6rem 1rem;
 }
 
 table tbody tr td:first-child{
@@ -140,10 +147,15 @@ table tbody tr td:last-child {
     border-radius: 0 0.2rem 0.2rem 0;
 }
 
+table tbody tr td img {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
 tbody tr:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     transition: 250ms linear;
-    color: black;
 }
 
 .input {
@@ -170,6 +182,7 @@ tbody tr:hover {
 /* Hidden modal */
 .visibility {
     visibility: hidden;
+    opacity: 0;
 }
 
 #modal {
@@ -180,14 +193,16 @@ tbody tr:hover {
 }
 
 form input {
-    margin: 0.3rem 0;
+    margin: 0.2rem 0;
     border: none;
-    padding: 1rem 0.5rem;
+    padding: 0.7rem 0.5rem;
+    border-radius: 0.2rem;
+    outline-color: var(--lime);
 }
 
 form label {
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     display: flex;
     flex-direction: column;
 }
@@ -197,7 +212,8 @@ form label {
 }
 
 form p {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
+    font-weight: bold;
     color: var(--dark-slate-gray);
 }
 
@@ -209,14 +225,10 @@ form p {
 }
 
 .buttons {
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     font-size: 1.4rem;
     border-radius: 0.2rem;
     cursor: pointer;
-}
-
-#button-cancel:hover, #button-add:hover {
-    opacity: 0.5;
 }
 
 #button-cancel {
@@ -224,13 +236,25 @@ form p {
     border: 2px solid var(--crimson);
     color: var(--crimson);
     background-color: white;
+    transition: 200ms linear;
+}
+
+#button-cancel:hover {
+    background-color: var(--crimson);
+    color: white;
 }
 
 #button-add {
     width: 100%;
-    border: none;
     background-color: var(--lime);
     color: white;
+    border: 2px solid var(--lime);
+    transition: 200ms linear;
+}
+
+#button-add:hover {
+    background-color: white;
+    color: var(--lime)
 }
 
 footer {
@@ -241,13 +265,16 @@ footer {
 }
 
 footer p {
-    line-height: 1.6rem;
+    line-height: 1rem;
     color: var(--dark-slate-gray);
 }
 
 footer img{
     width: 120px;
-    margin-left: 0.6rem;    
+    margin-left: 0.4rem;
+    background-color: var(--dark-slate-gray);    
+    padding: 0.4rem;
+    border-radius: 00.2rem;
 }
 
 
@@ -259,10 +286,6 @@ footer div {
 }
 
 @media(min-width: 800px) {
-    html {
-        font-size: 87.5%;
-    }
-
     .container-boxes {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
